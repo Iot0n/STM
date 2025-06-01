@@ -46,7 +46,7 @@ void init_GPIOA_open_drain(){ //PA2
 	GPIOA->CRL |= GPIO_CRL_MODE2_1;
 	GPIOA->CRL |= GPIO_CRL_CNF2_0;
 	
-	GPIOA->BSRR = GPIO_BSRR_BS2;
+	GPIOA->BSRR |= GPIO_BSRR_BS2;
 	
 }
 
@@ -64,8 +64,8 @@ void init_TIM_PWM(){ //PA1
 	RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
 	TIM2->CR1 &= ~TIM_CR1_CMS;
 	TIM2->PSC = 72;
-	TIM2->ARR = 1000;
-	TIM2->CCR2 = 500;
+	TIM2->ARR = 3600;
+	TIM2->CCR2 = 1800;
 	TIM2->CCMR1 |= (TIM_CCMR1_OC2M_1 | TIM_CCMR1_OC2M_2);
 	TIM2->CCER |= TIM_CCER_CC2E;
 	TIM4->CR1 |= TIM_CR1_URS;
@@ -100,6 +100,24 @@ void init_GPIOB(){ //PB2
 	
 }
 
+void init_GPIOA3(){ //PA3
+	
+	RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
+	GPIOB->CRL |= GPIO_CRL_MODE3;
+	GPIOB->CRL &= ~GPIO_CRL_CNF3;
+	
+}
+
+void init_GPIOA4(){ //PA4
+	
+	RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
+	GPIOB->CRL &= ~GPIO_CRL_MODE4;
+	GPIOB->CRL |= GPIO_CRL_CNF4_0;
+	
+}
+
+
+
 void init_timer(){
 	
 	RCC->APB1ENR |= RCC_APB1ENR_TIM4EN;
@@ -130,6 +148,16 @@ void delay_us(int us){
 	while(my_ticks < us);
 	TIM4->CR1 &= ~TIM_CR1_CEN;
 
+};
+
+uint32_t cath_delay(uint16_t pin){
+	
+	TIM4->CR1 |= TIM_CR1_CEN;
+	my_ticks = 0;
+	while(pin);
+	TIM4->CR1 &= ~TIM_CR1_CEN;	
+	
+	return my_ticks;
 };
 
 

@@ -23,3 +23,6 @@ float read_temp_dat();
 void set0();
 	
 void set1();
+
+uint16_t return_temp();
+

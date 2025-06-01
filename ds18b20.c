@@ -4,14 +4,14 @@
 
 void set0(){
 	
-	GPIOA->BSRR = GPIO_BSRR_BR2;
+	GPIOA->BSRR |= GPIO_BSRR_BR2;
 	
 };
 
 
 void set1(){
 	
-	GPIOA->BSRR = GPIO_BSRR_BS2;
+	GPIOA->BSRR |= GPIO_BSRR_BS2;
 	
 };
 
@@ -126,3 +126,18 @@ float read_temp_dat() {
     return (temp_raw >> 4);
 }
 
+uint16_t return_temp(){
+	
+	uint16_t temp;
+	
+	reset_ds();
+	Skip_ROM();
+	comp_start();
+	reset_ds();
+	Skip_ROM();
+	temp = read_temp_dat();
+	reset_ds();
+	
+	return temp;
+	
+};

@@ -23,3 +23,10 @@ void init_timer();
 void delay_us(int us);
 
 uint8_t read_pin();
+
+uint32_t cath_delay(uint16_t pin);
+
+void init_GPIOA4(); //PA4
+
+void init_GPIOA3(); //PA3
+
